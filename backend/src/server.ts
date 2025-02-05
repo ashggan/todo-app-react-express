@@ -4,7 +4,6 @@ import cors from 'cors';
 import { config } from './utils/config';
 import taskRoutes from './routes/taskRoutes';
 
-
 const app = experss();
 
 app.use(cors());

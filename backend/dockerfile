@@ -1,5 +1,5 @@
 # Backend Dockerfile
-FROM node:18
+FROM node:22
 
 # Set working directory
 WORKDIR /app
@@ -13,8 +13,15 @@ RUN npm install
 # Copy source code
 COPY . .
 
+# Force Prisma to download the right binary
+RUN npx prisma generate
+
+# Set Prisma to use the correct query engine
+ENV PRISMA_QUERY_ENGINE_LIBRARY=/app/node_modules/@prisma/engines/libquery_engine-debian-openssl-3.0.x.so.node
+
+ENV PORT=8000
 # Expose backend port
 EXPOSE 8000
 
 # Start the backend server
-CMD ["node", "server.js"]
+CMD ["node", "dist/server.js"]
