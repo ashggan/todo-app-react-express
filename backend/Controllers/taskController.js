@@ -3,10 +3,10 @@ import prisma from "../models/prismaClient.js";
 
 export const createTask = async (req, res) => {
     try {
-        const { title, description, deadline } = req.body;
+        const { title, description, deadline ,status } = req.body;
         const userId = 'kkmd' // req.user.id; Extract user ID from request
         const task = await  prisma.task.create({
-            data: { title, description, deadline, status: "TODO", userId },
+            data: { title, description, deadline, status: status || "TODO", userId },
           });
         res.status(201).json(task);
     } catch (error) {
@@ -20,6 +20,7 @@ export const getTasks = async (req, res) => {
         const tasks =  await prisma.task.findMany();// { where: { userId: (req).user.id } }
         res.json(tasks);
     } catch (error) {
+        console.log(error)
         res.status(500).json({ message: "Error retrieving tasks" });
     }
 };
@@ -27,11 +28,10 @@ export const getTasks = async (req, res) => {
 export const updateTask = async (req , res) => {
     try {
         const { id } = req.params;
-        // res.send(id)
-        const { title, description, deadline } = req.body;
+        const { title, description, deadline , status } = req.body;
         const updatedTask = await prisma.task.update({
             where: { id },
-            data: { title, description, deadline },
+            data: { title, description, deadline , status },
         });
         res.json(updatedTask);
     } catch (error) {
@@ -51,17 +51,28 @@ export const deleteTask = async (req, res) => {
     }
 };
 
-export const changeTaskStatus = async (req, res ) => {
+ 
+
+export const searchTasks = async (req, res) => {
     try {
-        const { id  } = req.params;
-        const { status } = req.body; 
-        const updatedTask = await prisma.task.update({
-            where: { id },
-            data: { status },
+        const { query } = req.query; 
+        
+        if (!query) {
+            return res.status(400).json({ message: "Search query is required" });
+        }
+
+        const tasks = await prisma.task.findMany({
+            where: {
+                OR: [
+                    { title: { contains: query, mode: "insensitive" } },  
+                    { description: { contains: query, mode: "insensitive" } },  
+                ]
+            }
         });
-        res.json(updatedTask);
+
+        res.json(tasks);
     } catch (error) {
-        console.log(error)
-        res.status(500).json({ message: "Error changing task status" });
+        console.log(error);
+        res.status(500).json({ message: "Error searching tasks" });
     }
 };

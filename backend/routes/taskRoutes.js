@@ -1,13 +1,12 @@
 import express from "express";
-import { createTask , getTasks , updateTask ,deleteTask ,changeTaskStatus } from "../controllers/taskController.js";
-// import { authMiddleware } from "../middlewares/authMiddleware";
-
+import { createTask , getTasks , updateTask ,deleteTask ,searchTasks } from "../controllers/taskController.js";
+ 
 const router = express.Router();
 
 router.post("/", createTask);
 router.get("/", getTasks);
 router.put("/:id", updateTask);
 router.delete("/:id", deleteTask);
-router.patch("/:id", changeTaskStatus);
+router.get("/search", searchTasks);
 
 export default router;
