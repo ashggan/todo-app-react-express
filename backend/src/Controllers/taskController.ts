@@ -1,7 +1,9 @@
-import prisma from "../models/prismaClient.js"; 
+
+import { Request, Response } from "express";
+import prisma from "../models/prismaClient"; 
 
 
-export const createTask = async (req, res) => {
+export const createTask = async (req: Request, res : Response) => {
     try {
         const { title, description, deadline ,status , userId} = req.body;
         const task = await  prisma.task.create({
@@ -14,7 +16,7 @@ export const createTask = async (req, res) => {
     }
 };
 
-export const getTasksByUser = async (req, res) => {
+export const getTasksByUser = async (req :Request, res : Response) => {
     try {
         const {userId} = req.params 
         const tasks =  await prisma.task.findMany({where : {userId }}); 
@@ -25,7 +27,7 @@ export const getTasksByUser = async (req, res) => {
     }
 };
 
-export const updateTask = async (req , res) => {
+export const updateTask = async (req: Request , res : Response) => {
     try {
         const { id } = req.params;
         const { title, description, deadline , status } = req.body;
@@ -40,7 +42,7 @@ export const updateTask = async (req , res) => {
     }
 };
 
-export const deleteTask = async (req, res) => {
+export const deleteTask = async (req: Request, res : Response) => {
     try {
         const { id } = req.params;
         await prisma.task.delete({ where: { id } });
@@ -50,17 +52,14 @@ export const deleteTask = async (req, res) => {
         res.status(500).json({ message: "Error deleting task" });
     }
 };
-
  
-
-export const searchTasks = async (req, res) => {
+export const searchTasks = async (req: Request, res : Response) => {
     try {
-        const { query } = req.query; 
-        
-        if (!query) {
+        const  query  = req.query.query as string | undefined  ; 
+        if (!query || typeof query !== "string") {
             return res.status(400).json({ message: "Search query is required" });
         }
-
+        
         const tasks = await prisma.task.findMany({
             where: {
                 OR: [
