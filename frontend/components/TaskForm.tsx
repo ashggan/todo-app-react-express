@@ -3,11 +3,16 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Task, TaskFormProps, TaskStatus } from "../utils/type";
 import { createTask, updateTask } from "../api/tasks";
 import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const TaskForm = ({ taskToEdit, onCancel }: TaskFormProps) => {
+
+  const { user } = useAuth0();
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState("");
+  const [userId] = useState("");
   const [status, setStatus] = useState<TaskStatus>(TaskStatus.TODO);
 
   const queryClient = useQueryClient();  
@@ -60,6 +65,7 @@ const TaskForm = ({ taskToEdit, onCancel }: TaskFormProps) => {
       description,
       status : status || 'TODO',
       deadline: new Date(deadline).toISOString(),
+      userId : userId || user?.email || 'unknown_user'
     };
 
     if (taskToEdit) {

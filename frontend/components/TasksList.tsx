@@ -6,15 +6,18 @@ import TaskForm from "./TaskForm";
 import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const TaskList = () => {
+  const { user } = useAuth0();
+
   const queryClient = useQueryClient();
   const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
   const [query, setQuery] = useState("");
 
   const { data: tasks, isLoading, error, refetch } = useQuery({
     queryKey: ["tasks"],
-    queryFn: fetchTasks,
+    queryFn: () => fetchTasks(user?.email as string),
   });
 
   const deleteMutation = useMutation({

@@ -1,8 +1,8 @@
 import { Task } from "../utils/type";
 import axios from "axios";
 
-export const fetchTasks = async () => {
-  const { data } = await axios.get("http://localhost:3000/tasks");
+export const fetchTasks = async (userId :string ) => {
+  const { data } = await axios.get(`http://localhost:3000/tasks/${userId}`);
   return data.map((task: Task) => ({
     ...task,
     deadline: task.deadline || "",  

@@ -10,9 +10,9 @@ export interface Task {
     title : string ,
     description : string ,
     deadline : string ,
-    userId? : string ,
+    userId : string ,
     status ? : TaskStatus ,
-    id: string
+    id: string 
 } 
 
 export interface TaskCardProps {
@@ -23,7 +23,7 @@ export interface TaskCardProps {
 
 export interface TaskFormProps {
     taskToEdit?: Task | null;
-    onCancel?: () => void; // Function to reset form
+    onCancel?: () => void;  
   }
 
 
