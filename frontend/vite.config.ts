@@ -11,4 +11,8 @@ export default defineConfig({
   define: {
     "process.env": {}, // Prevents errors if libraries rely on `process.env`
   },
+  server: {
+    host: '0.0.0.0',  
+    port: 5173
+  }
 })

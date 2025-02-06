@@ -1,8 +1,10 @@
 import { Task } from "../utils/type";
 import axios from "axios";
 
+const BAER_URL = 'http://localhost:8000/tasks'
+
 export const fetchTasks = async (userId :string ) => {
-  const { data } = await axios.get(`http://localhost:3000/tasks/${userId}`);
+  const { data } = await axios.get(`${BAER_URL}/${userId}`);
   return data.map((task: Task) => ({
     ...task,
     deadline: task.deadline || "",  
@@ -10,30 +12,30 @@ export const fetchTasks = async (userId :string ) => {
 };
   
 export const deleteTask = async (taskId: string) => {
-  await axios.delete(`http://localhost:3000/tasks/${taskId}`);
+  await axios.delete(`${BAER_URL}/${taskId}`);
 };
 
 export const editTask = async (updatedTask: Task) => {
   const { id, ...taskData } = updatedTask;
-  const { data } = await axios.patch(`http://localhost:3000/tasks/${id}`, taskData);
+  const { data } = await axios.patch(`${BAER_URL}/${id}`, taskData);
   return data;
 };
 
 export const updateTask = async (updatedTask: Task): Promise<Task> => {
   const { data } = await axios.put(
-    `http://localhost:3000/tasks/${updatedTask.id}`,
+    `${BAER_URL}/${updatedTask.id}`,
     updatedTask
   );
   return data;
 };
 
 export const createTask = async (newTask: Task): Promise<Task> => {
-  const { data } = await axios.post("http://localhost:3000/tasks", newTask);
+  const { data } = await axios.post(`${BAER_URL}`, newTask);
   return data;
 };
 
 
 export const searchTask = async(query : string) => {
-  const { data } = await axios.get(`http://localhost:3000/tasks/search?query=${query}`);
+  const { data } = await axios.get(`${BAER_URL}/search?query=${query}`);
   return data;
 }

@@ -24,4 +24,4 @@ ENV PORT=8000
 EXPOSE 8000
 
 # Start the backend server
-CMD ["node", "dist/server.js"]
+CMD npx prisma migrate deploy && node dist/server.js
