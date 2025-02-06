@@ -1,10 +1,6 @@
 # Todo List App Backend
 
-A simple backend for a **Todo List App**, built with **Express, TypeScript, Prisma, and PostgreSQL**. Provides authentication, task management, and CRUD operations.
-
-## Authentication
-
-Uses **Auth0** or any preferred out-of-the-box authentication platform for user access. Supports user signup, login, and secure access with JWT.
+A simple backend for a **Todo List App**, built with **Express, TypeScript, Prisma, and PostgreSQL**
 
 ## Setup
 
@@ -32,17 +28,3 @@ Uses **Auth0** or any preferred out-of-the-box authentication platform for user 
 ```sh
 docker-compose up --build
 ```
-
-## API Endpoints
-
-- `POST /auth/signup` - Register
-- `POST /auth/login` - Login
-- `POST /tasks` - Create task
-- `GET /tasks` - Get tasks
-- `PUT /tasks/:id` - Update task
-- `DELETE /tasks/:id` - Delete task (TODO only)
-- `PATCH /tasks/:id/status` - Change task status
-
-## License
-
-MIT License
