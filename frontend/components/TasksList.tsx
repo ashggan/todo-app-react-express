@@ -29,17 +29,18 @@ const TaskList = () => {
   const searchMutation = useMutation({
     mutationFn: searchTask,
     onSuccess: (data) => {
-      queryClient.setQueryData(["tasks"], data);  
+      queryClient.setQueryData(["tasks"], data);
     },
     onError: (err) => console.error("Error finding task:", err),
   });
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
+  
     if (e.target.value.trim() === "") {
-      refetch();  
+      refetch();
     } else {
-      searchMutation.mutate(e.target.value);  
+      searchMutation.mutate({ userId: user?.email || "", query: e.target.value });
     }
   };
 

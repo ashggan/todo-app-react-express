@@ -1,5 +1,6 @@
 import { Task } from "../utils/type";
 import axios from "axios";
+import debounce from 'lodash/debounce';
 
 const BAER_URL = 'http://localhost:8000/tasks'
 
@@ -35,7 +36,10 @@ export const createTask = async (newTask: Task): Promise<Task> => {
 };
 
 
-export const searchTask = async(query : string) => {
-  const { data } = await axios.get(`${BAER_URL}/search?query=${query}`);
+export const searchTask = async ({ userId, query }: { userId: string; query: string }) => {
+  const { data } = await axios.get(`${BAER_URL}/search/${userId}?query=${query}`);
+  console.log(`${BAER_URL}/search/${userId}?query=${query}`)
   return data;
-}
+} 
+
+// http://localhost:8000/tasks/search/kkmd?query=sdfx
