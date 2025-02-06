@@ -1,5 +1,5 @@
 
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import prisma from "../models/prismaClient"; 
 
 
@@ -53,19 +53,26 @@ export const deleteTask = async (req: Request, res : Response) => {
     }
 };
  
-export const searchTasks = async (req: Request, res : Response) => {
+export const FindTask = async (req: Request, res : Response ) => {
     try {
-        const  query  = req.query.query as string | undefined  ; 
+        const  query  = req.query.query as string | undefined  ;
+        const userId = req.params.userId as string | undefined ;
+ 
         if (!query || typeof query !== "string") {
             return res.status(400).json({ message: "Search query is required" });
         }
         
         const tasks = await prisma.task.findMany({
             where: {
-                OR: [
-                    { title: { contains: query, mode: "insensitive" } },  
-                    { description: { contains: query, mode: "insensitive" } },  
-                ]
+                AND: [
+                    { userId: userId }, 
+                    {
+                        OR: [
+                            { title: { contains: query, mode: "insensitive" } },
+                            { description: { contains: query, mode: "insensitive" } },
+                        ],
+                    },
+                ],
             }
         });
 
