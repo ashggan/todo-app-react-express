@@ -36,25 +36,12 @@ You should see:
 ## 📌 Accessing the Application
 - **Frontend (React App):** [http://localhost:5173](http://localhost:5173)
 - **Backend (API Server):** [http://localhost:8000](http://localhost:8000)
-- **PostgreSQL:** Accessible at `localhost:5432` with:
-  - **User:** `admin`
-  - **Password:** `password`
-  - **Database:** `todolist`
+ 
+ 
 
 
 
 
 
-## 📌 Environment Variables
-Modify **`.env`** files if needed. Example:
-```
-POSTGRES_USER=admin
-POSTGRES_PASSWORD=password
-POSTGRES_DB=todolist
-DATABASE_URL=postgresql://admin:password@postgres:5432/todolist
-PORT=8000
-```
-
----
 
 
