@@ -10,7 +10,7 @@ This is a full-stack **Todo List Application** with a **React frontend**, **Node
 ### 1️⃣ Clone the Repository
 ```sh
 git clone git@github.com:ashggan/todo-app-react-express.git
-cd <todo-app-react-express>
+cd todo-app-react-express
 ```
 
 ### 2️⃣ Build and Start the Containers
